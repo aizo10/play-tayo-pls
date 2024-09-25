@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta charset="UTF-8">
+    <title>Play Evade with Me</title>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            position: relative;
+            overflow: hidden; /* Prevent scrolling */
+        }
+        .message {
+            margin-bottom: 20px;
+            font-size: 24px;
+            text-align: center;
+            color: #333;
+        }
+        .bold {
+            font-weight: bold;
+            font-size: 28px; /* Adjust size if needed */
+        }
+        .gradient {
+            background: linear-gradient(to right, red, darkred);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            font-size: 32px; /* Adjust size if needed */
+            margin-bottom: 20px;
+            text-align: center;
+        }
+        .btn-container {
+            margin: 20px;
+            display: flex; /* Use flexbox for alignment */
+            justify-content: center; /* Center the buttons */
+            gap: 20px; /* Add space between buttons */
+        }
+        button {
+            padding: 15px 30px;
+            font-size: 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s, transform 0.3s;
+            position: relative; /* Allow absolute positioning */
+            z-index: 10; /* Bring buttons above images */
+        }
+        .yes-btn {
+            background-color: #4CAF50; /* Green */
+            color: white;
+        }
+        .no-btn {
+            background-color: #f44336; /* Red */
+            color: white;
+        }
+        .image {
+            display: none;
+            position: absolute;
+            max-width: 100px; /* Adjust as needed */
+            transition: transform 0.5s; /* Smooth transition */
+            z-index: 5; /* Place images below buttons */
+        }
+        .creator {
+            position: absolute;
+            bottom: 20px; /* Fixed position at the bottom */
+            font-size: 18px;
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <div class="message bold">HI BOSSING!!</div>
+    <div class="message">laro tayo boss roblox pls :(("</div>
+    <div class="message gradient" id="endMessage" style="display: none;">AYAW MONA BA AKO KALARO :(</div>
+
+    <div class="btn-container">
+        <button class="yes-btn" onclick="location.href='yes.html'">Yes</button>
+        <button class="no-btn" id="noBtn">No</button>
+    </div>
+
+    <div class="images1">
+    <img class="image" src="evade.jpg" alt="" style="width: 400px; height: auto;">
+    <img class="image" src="https://c.tenor.com/36JFV8pDtXIAAAAd/sad-your-friends-are-togheter.gif" alt="" style="width: 400px; height: auto;">
+    <img class="image" src="https://c.tenor.com/6CujUsC1CIkAAAAM/crying-black-guy-meme50fps-interpolated-interpolated.gif" alt="" style="width: 400px; height: auto;">
+    <img class="image" src="sss.jpg" alt="" style="width: 400px; height: auto;">
+    <img class="image" src="images.jpg" alt="" style="width: 400px; height: auto;">
+    <img class="image" src="200w.gif" alt="" style="width: 400px; height: auto;">
+</div>
+
+
+    <div class="creator">created by ur bossing</div>
+
+    <script>
+        const noButton = document.getElementById('noBtn');
+        const images = document.querySelectorAll('.image');
+        const endMessage = document.getElementById('endMessage');
+        let noCount = 0;
+
+        // Function to move buttons randomly
+        function moveButton(button) {
+            const randomX = Math.random() * 300 - 150; // Increased movement range
+            const randomY = Math.random() * 300 - 150; // Increased movement range
+            button.style.transform = `translate(${randomX}px, ${randomY}px)`;
+        }
+
+        noButton.addEventListener('click', () => {
+            noCount++;
+            moveButton(noButton); // Move the No button
+
+            // Show the corresponding image
+            if (noCount <= images.length) {
+                const imageToShow = images[noCount - 1];
+                const imgRandomX = Math.random() * (window.innerWidth - 150); // Random position for the image
+                const imgRandomY = Math.random() * (window.innerHeight - 150);
+                imageToShow.style.left = `${imgRandomX}px`;
+                imageToShow.style.top = `${imgRandomY}px`;
+                imageToShow.style.display = 'block'; // Show the image
+            }
+
+            // After 10 clicks, show the message and create more "No" buttons
+            if (noCount === 10) {
+                endMessage.style.display = 'block'; // Show end message
+                for (let i = 0; i < 10; i++) { // Create 10 clones
+                    const newNoButton = document.createElement('button');
+                    newNoButton.textContent = 'No';
+                    newNoButton.className = 'no-btn';
+                    newNoButton.style.position = 'absolute';
+                    newNoButton.style.left = `${Math.random() * (window.innerWidth - 100)}px`;
+                    newNoButton.style.top = `${Math.random() * (window.innerHeight - 100)}px`;
+                    document.body.appendChild(newNoButton);
+
+                    // Make the new button movable
+                    newNoButton.addEventListener('click', () => {
+                        moveButton(newNoButton); // Move the cloned No button
+                    });
+                }
+            }
+        });
+    </script>
+</body>
+</html>
